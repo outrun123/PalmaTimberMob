@@ -1,11 +1,9 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Pavadzīmes</PageTitle>
 
-<h1>Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
+<h1>Pavadzīmes</h1>
 
 @if (forecasts == null)
 {
@@ -16,10 +14,12 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Datums</th>
+                <th>Numurs</th>
+                <th>Pircējs</th>
+                <th>Uzkrauts</th>
+                <th>Km bez kravas</th>
+                <th>Km ar kravu</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +28,10 @@ else
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
+                    <td><input type="number"></td>
+                    <td><input type="number"></td>
+                    <td><input type="number"></td>
                 </tr>
             }
         </tbody>
@@ -51,7 +53,5 @@ else
         public int TemperatureC { get; set; }
 
         public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
