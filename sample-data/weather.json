@@ -2,26 +2,26 @@
   {
     "date": "2022-01-06",
     "temperatureC": 1,
-    "summary": "Freezing"
+    "summary": "BSW"
   },
   {
     "date": "2022-01-07",
     "temperatureC": 14,
-    "summary": "Bracing"
+    "summary": "PATA"
   },
   {
     "date": "2022-01-08",
-    "temperatureC": -13,
-    "summary": "Freezing"
+    "temperatureC": 13,
+    "summary": "PATA"
   },
   {
     "date": "2022-01-09",
-    "temperatureC": -16,
-    "summary": "Balmy"
+    "temperatureC": 16,
+    "summary": "PATA"
   },
   {
     "date": "2022-01-10",
-    "temperatureC": -2,
-    "summary": "Chilly"
+    "temperatureC": 2,
+    "summary": "BSW"
   }
 ]
