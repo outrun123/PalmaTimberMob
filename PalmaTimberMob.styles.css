@@ -1,3 +1,23 @@
+@import '_content/Blazored.Toast/Blazored.Toast.bundle.scp.css';
+
+/* /Components/UpdateAvailableDetector.razor.rz.scp.css */
+.floating-update-button[b-hivjanozrg] {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    padding: 1rem 1.5rem;
+    animation: fadein-b-hivjanozrg 2s ease-out;
+}
+
+@keyframes fadein-b-hivjanozrg {
+    from {
+        right: -100%;
+    }
+
+    to {
+        right: 2rem;
+    }
+}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-532bmplyde] {
     position: relative;
