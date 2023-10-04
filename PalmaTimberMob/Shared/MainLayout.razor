@@ -1,6 +1,27 @@
-﻿@inherits LayoutComponentBase
+﻿@using PalmaTimberMob.Components
+@inherits LayoutComponentBase
 
-<div class="page">
+<BlazoredToasts />
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        Palma MOB
+    </MudAppBar>
+    <MudDrawer @bind-Open="@drawerOpen">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@* <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -9,9 +30,32 @@
         <div class="top-row px-4">
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
+        <AuthorizeView>
+            <Authorized>
+               <p>Hello, @context.User.Identity.Name!</p>
+                <div class="btn btn-outline-primary" @onclick="LogoutUser">Atslēgties</div>
+            </Authorized>
+            <NotAuthorized>
+                <a href="/login" class="btn btn-outline-primary">Pieslēgties</a>
+            </NotAuthorized>
+            
+        </AuthorizeView>
+        <Connection>
+            <Online>
+                <h1 style="color: green">Online</h1>
+            </Online>
+            <Offline>
+                <h1 style="color: red">Offline</h1>
+            </Offline>
+        </Connection>
 
         <article class="content px-4">
             @Body
         </article>
+
+        <UpdateAvailableDetector/>
+
+       
     </main>
 </div>
+ *@

@@ -1,4 +1,16 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Sākums</MudNavLink>
+    <MudNavLink Href="/cirsmas" Match="NavLinkMatch.Prefix">Cirsmas</MudNavLink>
+    <MudNavGroup Title="Iestatījumi" Expanded="true">
+        <MudNavLink Href="/test" Match="NavLinkMatch.Prefix">Test1</MudNavLink>
+        <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Test2</MudNavLink>
+    </MudNavGroup>
+</MudNavMenu>
+
+
+
+
+@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Palma Timber Mob</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -19,6 +31,11 @@
                 <span class="oi oi-spreadsheet" aria-hidden="true"></span> Pavadzīmes
             </NavLink>
         </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="cirsmas">
+                <span class="oi oi-spreadsheet" aria-hidden="true"></span> Cirsmas
+            </NavLink>
+        </div>
     </nav>
 </div>
 
@@ -32,3 +49,4 @@
         collapseNavMenu = !collapseNavMenu;
     }
 }
+ *@

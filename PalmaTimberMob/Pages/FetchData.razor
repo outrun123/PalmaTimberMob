@@ -1,57 +1,82 @@
 ﻿@page "/fetchdata"
-@inject HttpClient Http
+@using PalmaTimberMob.Brokers;
+@using PalmaTimberMob.Models;
+@using PalmaTimberMob.Services;
+@using System.Security.Claims;
+@using Syncfusion.Blazor.Grids
+@inject IDocketsService DocketsService
+@inject IApiBroker StorageBroker
 
 <PageTitle>Pavadzīmes</PageTitle>
 
-<h1>Pavadzīmes</h1>
+<h1>Pavadzīmes!</h1>
 
-@if (forecasts == null)
+@if (docketsDatabase == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Datums</th>
-                <th>Numurs</th>
-                <th>Pircējs</th>
-                <th>Uzkrauts</th>
-                <th>Km bez kravas</th>
-                <th>Km ar kravu</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.Summary</td>
-                    <td><input type="number"></td>
-                    <td><input type="number"></td>
-                    <td><input type="number"></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="col-lg-12 control-section">
+       <div class="content-wrapper">
+          <div class="row">
+             <div class="content-wrapper e-bigger e-adaptive-demo">
+                <div class="e-mobile-layout">
+                   <div class="e-mobile-content">
+                      <SfGrid DataSource="@docketsDatabase" AllowSorting="true" AllowFiltering="true" EnableAdaptiveUI="true" Toolbar="@(new List <string> () { "Add", "Edit", "Delete", "Cancel", "Update", "Search" })" RowRenderingMode="RowDirection.Vertical" Height="100%" Width="100%" AllowPaging="true">
+                          <GridFilterSettings Type="@FilterType.Excel"></GridFilterSettings>
+                          <GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="EditMode.Dialog"></GridEditSettings>
+                      @*    <GridAggregates>
+                             <GridAggregate>
+                                <GridAggregateColumns>
+                                   <GridAggregateColumn Field=@nameof(OrdersDetails.Freight) Type="AggregateType.Sum" Format="C2">
+                                      <FooterTemplate>
+                                         @{
+                                         var aggregate = (context as AggregateTemplateContext);
+                                         <div>
+                                            <p>Sum: @aggregate.Sum</p>
+                                         </div>
+                                         }
+                                      </FooterTemplate>
+                            </GridAggregateColumn>
+                                </GridAggregateColumns>
+                             </GridAggregate>
+                          </GridAggregates>*@
+                          <GridColumns>
+                             <GridColumn Field=@nameof(Docket.Id) Visible="false" HeaderText="ID" IsPrimaryKey="true" ValidationRules="@(new ValidationRules{ Required=true, Number=true})" Width="120"></GridColumn>
+                             <GridColumn Field=@nameof(Docket.Number) HeaderText="PVZ numuri" Width="30"></GridColumn>
+                             <GridColumn Field=@nameof(Docket.Notes) HeaderText="Piezīmes" Format="d" Type="ColumnType.String" Width="130"></GridColumn>
+                             <GridColumn Field=@nameof(Docket.NotesTransport) HeaderText="Šofera piezīmes" Format="d" Type="ColumnType.String" Width="130"></GridColumn>
+                          </GridColumns>
+                      </SfGrid>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+    private List<Docket> dockets;
+    private List<Docket> docketsDatabase;
+    private List<Enterprise> enterprises;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
+        var authState = await AuthenticationState;
+        var user = authState.User;
 
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
+        if (user.Identity.IsAuthenticated)
+        {
+            var name = user.Identity.Name;
+            var id = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        }
 
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
+        // dockets = await DocketsService.GetDocketsAsync();
+        docketsDatabase = await StorageBroker.GetDocketsAsync();
+        enterprises = await StorageBroker.GetEnterprisesAsync();
     }
 }

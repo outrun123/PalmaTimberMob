@@ -1,0 +1,41 @@
+﻿@page "/test"
+@using PalmaTimberMob.Models;
+<h3>Cirsma XXX</h3>
+
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Sortiments">
+        <MudText>Content One</MudText>
+        <MudDataGrid Items="@fellDatas">
+            <Columns>
+                <PropertyColumn Property="x => x.PlaceNumber" Title="Nr" />
+                <PropertyColumn Property="x => x.ForwardedQuantityM3" />
+                <PropertyColumn Property="x => x.PreparedQuantityM3" />
+            </Columns>
+        </MudDataGrid>
+    </MudTabPanel>
+    <MudTabPanel Text="Palīgdarbi">
+        <MudText>Content Two</MudText>
+    </MudTabPanel>
+    <MudTabPanel Text="Remonti">
+        <MudText>Content Three</MudText>
+    </MudTabPanel>
+</MudTabs>
+
+
+@code {
+    private List<FellingAmount> fellDatas = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        FellingAmount fellData = new FellingAmount()
+          {
+              FellingId = 1,
+              PlaceNumber = "100",
+              ForwardedQuantityM3 = 51,
+              PreparedQuantityM3 = 150
+          };
+
+        fellDatas.Add(fellData);
+    }
+}
